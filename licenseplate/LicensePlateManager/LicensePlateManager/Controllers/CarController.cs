@@ -27,7 +27,8 @@ namespace LicensePlateManager.Controllers
         [HttpGet("{brand}")]
         public IActionResult Search(string brand)
         {
-            return View(carRepository.carContext.Cars/*.Where(x => x.car_brand == brand)*/);
+            return View(carRepository.carContext.Cars.Where(x => x.car_brand == brand));
+            //Yet it returns with some error 500 because I cannot manage DBset string/normal string conversion
         }
     }
 }

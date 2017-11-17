@@ -1,6 +1,6 @@
 ﻿@model Microsoft.EntityFrameworkCore.DbSet<LicensePlateManager.Models.Car>
 @{ 
-    string plate = "H";
+    string plate = "";
     bool isPolice = false;
     bool isDiplomat = false;
 }
@@ -14,23 +14,20 @@
 
     @using (Html.BeginForm("Search", "Car"))
     {
-        <input type="hidden" name="plate" value="@plate" />
-            <table align="center" style="text-align:center" border="1">
-                <tr>
-                    <th style="text-align:center">Plate</th>
-                    <th style="text-align:center">Police only?</th>
-                    <th style="text-align:center">Diplomat only?</th>
-                    <th style="text-align:center">Search</th>
-                </tr>
-                <tr>
-                    <td>@Html.TextBoxFor(model => plate)</td>
-                    <td>@Html.CheckBoxFor(model => isPolice)</td>
-                    <td>@Html.CheckBoxFor(model => isDiplomat)</td>
-                    <td>
-                        <input class="button" type="submit" value="Search">
-                    </td>
-                </tr>
-            </table><br />
+        <table align="center" style="text-align:center" border="1">
+            <tr>
+                <th style="text-align:center">Plate</th>
+                <th style="text-align:center">Police only?</th>
+                <th style="text-align:center">Diplomat only?</th>
+                <th style="text-align:center">Search</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="@plate" value="@plate" /></td>
+                <td><input type="checkbox" name="@isPolice" /></td>
+                <td><input type="checkbox" name="@isDiplomat" /></td>
+                <td><input class="button" type="submit" value="Search"></td>
+            </tr>
+        </table><br />
 
         <table align="center" style="text-align:center" border="1">
            <tr>
@@ -42,20 +39,59 @@
             </tr>
             @foreach (var element in @Model)
             {
-                @if (@element.plate.Contains(plate))
-                {
-                    <tr>
-                        <td>@element.plate</td>
-                        <td>
-                            @using (Html.BeginForm("Search", "Car"))
+                @if (isPolice) {
+                    @if (@element.plate.Contains("RB"))
+                    {
+                        <tr>
+                            <td>@element.plate</td>
+                            <td>
+                                @using (Html.BeginForm("Search", "Car"))
                             {
-                                <button style="width: 100%">@element.car_brand</button>
-                            }
-                        </td>
-                        <td>@element.car_model</td>
-                        <td>@element.color</td>
-                        <td>@element.year</td>
-                    </tr>
+                                    <button style="width: 100%">@element.car_brand</button>
+                                }
+                            </td>
+                            <td>@element.car_model</td>
+                            <td>@element.color</td>
+                            <td>@element.year</td>
+                        </tr>
+                    }
+
+                }
+                else if (isDiplomat)
+                {
+                    @if (@element.plate.Contains("DT"))
+                    {
+                        <tr>
+                            <td>@element.plate</td>
+                            <td>
+                                @using (Html.BeginForm("Search", "Car"))
+                            {
+                                    <button style="width: 100%">@element.car_brand</button>
+                                }
+                            </td>
+                            <td>@element.car_model</td>
+                            <td>@element.color</td>
+                            <td>@element.year</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    @if (@element.plate.Contains(plate))
+                    {
+                        <tr>
+                            <td>@element.plate</td>
+                            <td>
+                                @using (Html.BeginForm("Search", "Car"))
+                            {
+                                    <button style="width: 100%">@element.car_brand</button>
+                                }
+                            </td>
+                            <td>@element.car_model</td>
+                            <td>@element.color</td>
+                            <td>@element.year</td>
+                        </tr>
+                    }
                 }
             }
         </table>
