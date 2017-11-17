@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using LicensePlateManager.Repositories;
 using LicensePlateManager.Models;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Collections.Generic;
 
 namespace LicensePlateManager.Controllers
 {
@@ -17,26 +16,18 @@ namespace LicensePlateManager.Controllers
         }
 
         [Route("/")]
-        [Route("/list")]
+        [Route("/search")]
         [HttpGet]
-        public IActionResult List()
+        public IActionResult Search()
         {
             return View(carRepository.carContext.Cars);
         }
 
-        [HttpGet]
         [Route("/search")]
-        public IActionResult Add()
+        [HttpGet("{brand}")]
+        public IActionResult Search(string brand)
         {
-            return View();
-        }
-
-        [HttpPost]
-        [Route("/add")]
-        public IActionResult Add(Car car)
-        {
-            carRepository.AddRow(car);
-            return RedirectToAction("List");
+            return View(carRepository.carContext.Cars/*.Where(x => x.car_brand == brand)*/);
         }
     }
 }

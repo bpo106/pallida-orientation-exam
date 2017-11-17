@@ -1,0 +1,64 @@
+﻿@model Microsoft.EntityFrameworkCore.DbSet<LicensePlateManager.Models.Car>
+@{ 
+    string plate = "H";
+    bool isPolice = false;
+    bool isDiplomat = false;
+}
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Car list</title>
+</head>
+<body>
+    <h1 style="text-align:center">Car list</h1>
+
+    @using (Html.BeginForm("Search", "Car"))
+    {
+        <input type="hidden" name="plate" value="@plate" />
+            <table align="center" style="text-align:center" border="1">
+                <tr>
+                    <th style="text-align:center">Plate</th>
+                    <th style="text-align:center">Police only?</th>
+                    <th style="text-align:center">Diplomat only?</th>
+                    <th style="text-align:center">Search</th>
+                </tr>
+                <tr>
+                    <td>@Html.TextBoxFor(model => plate)</td>
+                    <td>@Html.CheckBoxFor(model => isPolice)</td>
+                    <td>@Html.CheckBoxFor(model => isDiplomat)</td>
+                    <td>
+                        <input class="button" type="submit" value="Search">
+                    </td>
+                </tr>
+            </table><br />
+
+        <table align="center" style="text-align:center" border="1">
+           <tr>
+                <td>License plate</td>
+                <td>Brand</td>
+                <td>Model</td>
+                <td>Color</td>
+                <td>Year</td>
+            </tr>
+            @foreach (var element in @Model)
+            {
+                @if (@element.plate.Contains(plate))
+                {
+                    <tr>
+                        <td>@element.plate</td>
+                        <td>
+                            @using (Html.BeginForm("Search", "Car"))
+                            {
+                                <button style="width: 100%">@element.car_brand</button>
+                            }
+                        </td>
+                        <td>@element.car_model</td>
+                        <td>@element.color</td>
+                        <td>@element.year</td>
+                    </tr>
+                }
+            }
+        </table>
+    }
+</body>
+</html>
