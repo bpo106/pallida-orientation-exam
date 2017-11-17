@@ -1,0 +1,51 @@
+﻿@model Microsoft.EntityFrameworkCore.DbSet<LicensePlateManager.Models.Car>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Car list</title>
+</head>
+<body>
+    <h1 style="text-align:center">Car list</h1>
+    <table align="center" style="text-align:center" border="1">
+        <tr>
+            <td>License plate</td>
+            <td>Brand</td>
+            <td>Model</td>
+            <td>Color</td>
+            <td>Year</td>
+        </tr>
+        @foreach (var element in @Model)
+        {
+            <tr>
+                <td>@element.plate</td>
+                <td>@element.car_brand</td>
+                <td>@element.car_model</td>
+                <td>@element.color</td>
+                <td>@element.year</td>
+                @*<td>
+                    @if (@element.IsInOperation)
+                    {
+                        @:In operation
+                    }
+                    else
+                    {
+                        @:Withdrawn
+                    }
+                </td>
+                <td>@element.Comments</td>
+                <td>
+                    <form action="/update">
+                        <input type="hidden" name="Id" value="@element.Id" />
+                        <button type="submit" style="width:100%">Update</button>
+                    </form>
+                </td>*@
+            </tr>
+        }
+    </table>
+
+    @*<br /><form align="center" action="/add">
+        <button type="submit">Search</button>
+    </form>*@
+
+</body>
+</html>

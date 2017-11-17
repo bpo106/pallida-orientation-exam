@@ -25,7 +25,7 @@ namespace LicensePlateManager.Controllers
         }
 
         [HttpGet]
-        [Route("/add")]
+        [Route("/search")]
         public IActionResult Add()
         {
             return View();
@@ -36,29 +36,6 @@ namespace LicensePlateManager.Controllers
         public IActionResult Add(Car car)
         {
             carRepository.AddRow(car);
-            return RedirectToAction("List");
-        }
-
-        [HttpPost("{id}")]
-        [Route("/remove")]
-        public IActionResult Remove(string plate)
-        {
-            carRepository.RemoveRow(plate);
-            return RedirectToAction("List");
-        }
-
-        [HttpGet("{id}")]
-        [Route("/update")]
-        public IActionResult Update([FromQuery] string plate)
-        {
-            return View(carRepository.carContext.Cars.Where(x => x.plate == plate).FirstOrDefault());
-        }
-
-        [HttpPost("{id}")]
-        [Route("/list/update")]
-        public IActionResult UpdateRow(Car newCar)
-        {
-            carRepository.Update(newCar);
             return RedirectToAction("List");
         }
     }
